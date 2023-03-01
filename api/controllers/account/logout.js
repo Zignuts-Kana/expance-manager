@@ -36,6 +36,7 @@ actually logged in.  (If they weren't, then this action is just a no-op.)`,
 
     // Clear the `userId` property from this session.
     delete this.req.session.userId;
+    await ExpanceUser.update({id:this.req.session.userId}).set({authToken:''});
 
     // Broadcast a message that we can display in other open tabs.
     if (sails.hooks.sockets) {

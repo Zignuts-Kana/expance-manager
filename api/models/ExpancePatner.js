@@ -10,33 +10,36 @@ module.exports = {
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
 
-    amount: {
-      type: 'number',
-      required:true,
+    isAccept: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
+
+    accountId: {
+      model: 'ExpanceAccount',
+      required:true
+    },
+
+    patnersId: { model: 'ExpanceUser',
+      required:true },
+
+    patnerEmail:{
+      type:'string',
+      isEmail: true,
     },
 
     owner: {
       model: 'ExpanceUser',
-      required:true,
+      required:true
     },
 
-    patnerId:{
-      model:'ExpanceUser',
+    accountName: {
+      type: 'string',
     },
 
-    accountId :{
-      model:'ExpanceAccount',
-      required:true,
-    },
-
-    isDebited:{
-      type: 'boolean',
-    },
-
-    isPatner:{
-      type: 'boolean',
-    },
-
+    accountNumber:{
+      type:'number',
+    }
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
     //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝

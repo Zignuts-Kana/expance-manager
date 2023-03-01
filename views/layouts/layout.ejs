@@ -56,12 +56,12 @@
             <a class="nav-link dropdown-toggle" id="header-account-menu-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
             <div style="left: auto; right: 0;" class="dropdown-menu" aria-labelledby="header-account-menu-link">
               <a class="dropdown-item" href="/account">Settings</a>
-              <a class="dropdown-item" href="/logout">Sign out</a>
+              <a class="dropdown-item" href="/logout" onclick="logOutFunction()">Sign out</a>
             </div>
           </div>
           <!-- Only in mobile nav -->
           <a class="nav-item nav-link ml-2 mr-2 d-block d-sm-none" href="/account">Account Settings</a>
-          <a class="nav-item nav-link ml-2 mr-2 d-block d-sm-none" href="/logout">Sign out</a>
+          <a class="nav-item nav-link ml-2 mr-2 d-block d-sm-none" href="/logout" onclick="logOutFunction()">Sign out</a>
           <% } else { %>
           <!-- LOGGED-OUT NAVIGATION -->
           <a class="nav-item nav-link ml-2 ml-md-0 mr-2" href="/faq">FAQ</a>
@@ -99,7 +99,7 @@
           <small class="nav-item d-inline-block"><a class="nav-link text-info px-1 px-sm-3" href="/legal/terms">Terms<span class="d-none d-sm-inline"> of use</span></a></small>
           <small class="nav-item d-inline-block"><a class="nav-link text-info px-1 px-sm-3" href="/legal/privacy">Privacy<span class="d-none d-sm-inline"> policy</span></a></small>
           <% if(me) { %>
-          <small class="nav-item d-inline-block"><a class="nav-link text-info px-1 px-sm-3" href="/logout">Sign out</a></small>
+          <small class="nav-item d-inline-block"><a class="nav-link text-info px-1 px-sm-3" href="/logout" onclick="logOutFunction()">Sign out</a></small>
           <% } %>
         </div>
         <small purpose="footer-copy">Copyright &copy; <%= sails.config.custom.platformCopyrightYear %> <a target="_blank" href="NEW_APP_COMPANY_ABOUT_HREF">NEW_APP_COMPANY_NAME</a>. <br class="d-block d-sm-none"/>All rights reserved.</small>
@@ -126,6 +126,11 @@
 
     <%/* Stripe.js */%>
     <script src="https://js.stripe.com/v3/"></script>
+    <script> 
+      function logOutFunction(){
+        window.localStorage.removeItem('user')
+      }
+    </script>
 
     <% /* Delete the global `self` to help avoid client-side bugs.
     (see https://developer.mozilla.org/en-US/docs/Web/API/Window/self) */ %>

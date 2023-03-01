@@ -173,31 +173,35 @@ will be disabled and/or hidden in the UI.
                 return next();
               }
               loggedInUser = user;
-            } else if(req.query.token){
+              req.session.userId = user.id;
+            }
+            if(req.query.token){
               const token = decodeURIComponent(req.query.token);
               const user = await sails.helpers.jwtAuthHelper(token);
               if (!user) {
                 return next();
               }
               loggedInUser = user;
-            } else{
-              if (!req.session) { return next(); }
-
-              // Not logged in? Proceed as usual.
-              if (!req.session.userId) { return next(); }
-
-              //Check for headers
-              if (req.headers['authorization']) {
-                const token = req.headers['authorization'].replace('Bearer ', '');
-                const id = sails.helpers.jwtTokenVerification(token);
-                if (id.decoded._id !== req.session.userId) {
-                  return next();
-                }
-              }
-              loggedInUser = await ExpanceUser.findOne({
-                id: req.session.userId
-              });
+              req.session.userId = user.id;
             }
+
+            if (!req.session) { return next(); }
+
+            // Not logged in? Proceed as usual.
+            if (!req.session.userId) { return next(); }
+
+            //Check for headers
+            if (req.headers['authorization']) {
+              const token = req.headers['authorization'].replace('Bearer ', '');
+              const id = sails.helpers.jwtTokenVerification(token);
+              if (id.decoded._id !== req.session.userId) {
+                return next();
+              }
+            }
+            loggedInUser = await ExpanceUser.findOne({
+              id: req.session.userId
+            });
+
 
             // Otherwise, look up the logged-in user.
 

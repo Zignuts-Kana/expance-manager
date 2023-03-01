@@ -275,38 +275,40 @@ module.exports = {
         attachments
       };
 
-      //   // var deferred = sails.helpers.sendgrid.sendHtmlEmail.with(messageData);
-      //   const deferred = transporter.sendMail(messageData);
-      //   if (ensureAck) {
-      //     await deferred;
-      //   } else {
-      //     // FUTURE: take advantage of .background() here instead (when available)
-      //     deferred.exec((err)=>{
-      //       if (err) {
-      //         sails.log.error(
-      //           'Background instruction failed:  Could not deliver email:\n'+
-      //           util.inspect({template, templateData, to, toName, subject, from, fromName, layout, ensureAck, bcc, attachments},{depth:null})+'\n',
-      //           'Error details:\n'+
-      //           util.inspect(err)
-      //         );
-      //       } else {
-      //         sails.log.info(
-      //           'Background instruction complete:  Email sent via email delivery service (or at least queued):\n'+
-      //           util.inspect({to, toName, subject, from, fromName, bcc},{depth:null})
-      //         );
-      //       }
-      //     });//_∏_
-      //   }//ﬁ
-      // }//ﬁ
+      // var deferred = sails.helpers.sendgrid.sendHtmlEmail.with(messageData);
+      console.log('ensureAck',ensureAck);
+      const deferred = transporter.sendMail(messageData);
+      console.log('deferred',deferred);
+      if (ensureAck) {
+        await deferred;
+      } else {
+        // FUTURE: take advantage of .background() here instead (when available)
+        deferred.catch((err)=>{
+          if (err) {
+            sails.log.error(
+                'Background instruction failed:  Could not deliver email:\n'+
+                util.inspect({template, templateData, to, toName, subject, from, fromName, layout, ensureAck, bcc, attachments},{depth:null})+'\n',
+                'Error details:\n'+
+                util.inspect(err)
+            );
+          } else {
+            sails.log.info(
+                'Background instruction complete:  Email sent via email delivery service (or at least queued):\n'+
+                util.inspect({to, toName, subject, from, fromName, bcc},{depth:null})
+            );
+          }
+        });//_∏_
+      }//ﬁ
 
-      transporter.sendMail(messageData, (err, data) => {
-        if (err) {
-          console.log('Error ' + err);
-        } else {
-          console.log('Email sent successfully');
-        }
-      });
-    }
+
+      // transporter.sendMail(messageData, (err, data) => {
+      //   if (err) {
+      //     console.log('Error ' + err);
+      //   } else {
+      //     console.log('Email sent successfully');
+      //   }
+      // });
+    }//ﬁ
 
     // All done!
     return {

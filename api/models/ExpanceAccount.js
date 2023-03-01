@@ -24,16 +24,23 @@ module.exports = {
     patners: { type: 'json', columnType: 'array' },
 
     owner: {
-      type: 'ref',
-      collection: 'expanceuser',
+      model: 'ExpanceUser',
+      required:true
     },
 
     accountName: {
       type: 'string',
       required: true,
-      description: 'Full representation of the account\'s name.',
-      maxLength: 120,
-      example: 'Mary Sue van der Account',
     },
+
+    //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
+    //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
+    //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
+    // n/a
+
+    //  ╔═╗╔═╗╔═╗╔═╗╔═╗╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
+    //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
+    //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
+    // n/a
   },
 };

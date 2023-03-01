@@ -91,17 +91,16 @@ and exposed as \`req.me\`.)`
     const token = sails.helpers.jwtTokenGenerater(userRecord);
 
     //send Welcome mail
-    // await sails.helpers.emailSender(userRecord);
-    await sails.helpers.emailSender.with({
-      to: userRecord.emailAddress,
-      subject: 'Welcome to Expance Management Group,Makes easy your life with Money Management',
-      template: 'internal/email-welcome-mail',
-      layout: false,
-      templateData: {
-        fullName: userRecord.fullName,
-        token:token.token,
-      }
-    });
+    // sails.helpers.emailSender.with({
+    //   to: userRecord.emailAddress,
+    //   subject: 'Welcome to Expance Management Group,Makes easy your life with Money Management',
+    //   template: 'internal/email-welcome-mail',
+    //   layout: false,
+    //   templateData: {
+    //     fullName: userRecord.fullName,
+    //     token:token.token,
+    //   }
+    // });
 
     userRecord = await ExpanceUser.update({emailAddress:userRecord.emailAddress}).set({authToken:token.token}).fetch();
     userRecord = userRecord[0];

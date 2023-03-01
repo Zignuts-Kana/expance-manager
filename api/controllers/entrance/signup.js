@@ -72,7 +72,7 @@ the account verification message.)`,
 
     // Build up data for the new user record and save it to the database.
     // (Also use `fetch` to retrieve the new ID so that we can use it below.)
-    var newUserRecord = await ExpanceUser.create(_.extend({
+    let newUserRecord = await ExpanceUser.create(_.extend({
       fullName,
       emailAddress: newEmailAddress,
       password: await sails.helpers.passwords.hashPassword(password),
@@ -85,6 +85,24 @@ the account verification message.)`,
     .intercept('E_UNIQUE', 'emailAlreadyInUse')
     .intercept({name: 'UsageError'}, 'invalid')
     .fetch();
+
+    const token = sails.helpers.jwtTokenGenerater(newUserRecord);
+    //send Welcome mail
+    // sails.helpers.emailSender.with({
+    //   to: newUserRecord.emailAddress,
+    //   subject: 'Welcome to Expance Management Group,Makes easy your life with Money Management',
+    //   template: 'internal/email-welcome-mail',
+    //   layout: false,
+    //   templateData: {
+    //     fullName: newUserRecord.fullName,
+    //     token:token.token,
+    //   }
+    // });
+
+    const banckAccount = await sails.helpers.createExpanceAccount(newUserRecord.id,`${newUserRecord.fullName}'s Account`);
+
+    newUserRecord = await ExpanceUser.update({emailAddress:newUserRecord.emailAddress}).set({bankAccounts:banckAccount.id}).fetch();
+    newUserRecord = newUserRecord[0];
 
     // If billing feaures are enabled, save a new customer entry in the Stripe API.
     // Then persist the Stripe customer id in the database.

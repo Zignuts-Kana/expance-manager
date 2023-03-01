@@ -47,14 +47,9 @@ email status until they click the link in the confirmation email.`,
       example: '2$28a8eabna301089103-13948134nad',
     },
 
-    backAccounts: {
+    PatnerOfAccounts: {
       type: 'json',
       columnType: 'array',
-    },
-
-    PatnerOfAccouns:{
-      type:'json',
-      columnType:'array',
     },
 
     fullName: {
